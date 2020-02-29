@@ -9,10 +9,6 @@ table = dynamoDB.create_table(
         {
             'AttributeName' : 'produce',
             'KeyType': 'HASH'
-        },
-        {
-            'AttributeName' : 'prices',
-            'KeyType' : 'RANGE'
         }
     ],
 
@@ -20,12 +16,12 @@ table = dynamoDB.create_table(
         {
             'AttributeName': 'produce',
             'AttributeType': 'S'
-        },
-        {
-            'AttributeName': 'prices',
-            'AttributeType': 'N'
         }
-    ]
+    ],
+    ProvisionedThroughput={
+        'ReadCapacityUnits': 10,
+        'WriteCapacityUnits': 10
+    }
 )
 
 print(table.table_status)
