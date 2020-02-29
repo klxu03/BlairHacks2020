@@ -8,9 +8,7 @@ def decode(bc) :
     # Print results
     for obj in decodedObjects:
         barNum = (obj.data).decode('utf-8')
-        print('Type : ', obj.type)
-        print('Data : ', barNum)
-    return decodedObjects
+    return barNum
 
 
 # Main
@@ -18,3 +16,4 @@ def barcodereader(filename):
     # Read image
     bc = cv2.imread(filename)
     decodedObjects = decode(bc)
+    return decodedObjects
