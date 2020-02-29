@@ -34,16 +34,6 @@ def getInfo(ingr, upc=None):
     else: 
         item_json = product_info(upc=upc)
         name = item_json["hints"][0]["food"]["label"]
-    print(type(item_json))
-    print()
-    print(item_json["hints"])
-    print()
-    print(item_json["hints"][0])
-    print()
-    print(item_json["hints"][0]["food"])
-    print()
-    print(item_json["hints"][0]["food"]["label"])
-    print()
     nutr_info = item_json["hints"][0]["food"]["nutrients"]
     extra_info = items[name] if name in items else items["other"] # TODO will be replaced by database
     return render_template("item.html", name=name, nutr_info=nutr_info, extra_info=extra_info)
