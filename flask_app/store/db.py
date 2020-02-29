@@ -1,5 +1,6 @@
 import boto3
 import csv
+import time
 
 # Takes a name and makes a product table with attribute name called
 def createTable(name):
@@ -26,6 +27,7 @@ def createTable(name):
             'WriteCapacityUnits': 10
         }
     )
+    return table
 
 # loads data from a csv file into a specified database
 def loadData(filename, database):
@@ -55,9 +57,9 @@ def getData(name, database):
     return info
 
 
-# Takes in a csv named [store].csv and makes a database called [store] with data
+# Takes in a csv named [filename].csv and makes a database called [name] with data
 # from the csv file
-def csvToDatabase(filename):
-    database = filename[:-4]
-    createTable(database)
-    loadData(filename, database)
+def csvToDatabase(filename, name):
+    createTable(name)
+    time.sleep(5)
+    loadData(filename, name)
