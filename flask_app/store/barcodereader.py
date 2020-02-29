@@ -17,5 +17,4 @@ def decode(bc) :
 def barcodereader(filename):
     # Read image
     bc = cv2.imread(filename)
-    print(bc)
     decodedObjects = decode(bc)
