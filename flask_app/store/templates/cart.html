@@ -34,8 +34,8 @@
          </class>
          <td data-th="Subtotal" class="text-center">1.99</td>
          <td class="actions" data-th="">
-            <button class="btn btn-info btn-sm" id = "deleteItem"><i class="fas fa-redo"></i></button>
-            <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>								
+            <button class="btn btn-info btn-sm"><i class="fas fa-redo"></i></button>
+            <a href="{{url_for('remItem', item=item)}}"><button class="btn btn-danger btn-sm deleteItem"><i class="fas fa-trash"></i></button></a>								
          </td>
       </td>
    </tr>
