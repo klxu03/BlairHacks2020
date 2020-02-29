@@ -1,12 +1,12 @@
 {% extends "layout.html" %}
 {% block item %}
-    <div class = "col-md-8 offset-md-2 welcome">
-        <div class="jumbotron">
-            <h1 class="display-4">Welcome to PepperJack!</h1>
-            <p class="lead">PepperJack is a place where you can find out information about differnt types of foods!</p>
-            <hr class="my-4">
-            <p>To find information about a specific food, click the button below to begin.</p>
-            <a class="btn btn-primary btn-lg" href="{{url_for('item')}}" role="button">Let's go!</a>
+    <div class="card col-md-8 offset-md-2">
+        <div class="card-body">
+    	    <h5 class="card-title">Item Name: {{name}}</h5>
+            MORE INFO HERE SUCH AS<br>  
+            Fat: 100000g  		
         </div>
-    </div>
+        <br>
+        <a href="{{url_for('additem', item=name)}}"><button type="button" class="btn btn-primary">Add to Cart</button></a>
+	</div>
 {% endblock %}
