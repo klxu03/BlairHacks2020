@@ -7,19 +7,6 @@ from flask_session import Session
 from werkzeug.utils import secure_filename
 from .barcodereader import barcodereader
 
-items = {
-    "apple": {
-                "name": "apple",
-                "price": 1.99
-            },
-    "orange": {
-                "name": "orange"
-            },
-    "other":{
-                "name": "unknown"
-    }
-}
-
 
 # Create a session object and initilize it
 sess = Session()
@@ -34,19 +21,9 @@ def getInfo(ingr, upc=None):
     else: 
         item_json = product_info(upc=upc)
         name = item_json["hints"][0]["food"]["label"]
-    print(type(item_json))
-    print()
-    print(item_json["hints"])
-    print()
-    print(item_json["hints"][0])
-    print()
-    print(item_json["hints"][0]["food"])
-    print()
-    print(item_json["hints"][0]["food"]["label"])
-    print()
     nutr_info = item_json["hints"][0]["food"]["nutrients"]
-    extra_info = items[name] if name in items else items["other"] # TODO will be replaced by database
-    return render_template("item.html", name=name, nutr_info=nutr_info, extra_info=extra_info)
+    #extra_info = items[name] if name in items else items["other"] # TODO will be replaced by database
+    return render_template("item.html", name=name, nutr_info=nutr_info, extra_info={"TODO"})
 
 @app.route('/item', methods=['GET', 'POST'])
 def item():
@@ -101,14 +78,7 @@ def handleFileUpload():
         if photo.filename != '': # if the photo exists (?)
             photo_url = os.path.join('./store/image-upload/', photo.filename)
             photo.save(photo_url)
-<<<<<<< HEAD
-    return redirect(url_for('item', json=json_from_barcode_photo(photo_url)))
-
-def json_from_barcode_photo(file_name):
-    return product_info(barcodereader(file_name))
-=======
     return redirect(url_for('item', json=barcodereader(photo_url)))
->>>>>>> dde4a4e4ebb729f7b5fee3fd97864e28a061c4a4
 
 @app.route('/')
 def home():
