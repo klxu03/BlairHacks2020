@@ -88,10 +88,17 @@ def handleFileUpload():
     if 'photo' in request.files:
         photo = request.files['photo']
         photo_url = None # defined here for scoping purposes
-        if photo.filename != '': # if the photo exists (?)           
+        if photo.filename != '': # if the photo exists (?)
             photo_url = os.path.join('./store/image-upload/', photo.filename)
             photo.save(photo_url)
+<<<<<<< HEAD
+    return redirect(url_for('item', json=json_from_barcode_photo(photo_url)))
+
+def json_from_barcode_photo(file_name):
+    return product_info(barcodereader(file_name))
+=======
     return redirect(url_for('item', json=barcodereader(photo_url)))
+>>>>>>> dde4a4e4ebb729f7b5fee3fd97864e28a061c4a4
 
 @app.route('/')
 def home():

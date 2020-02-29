@@ -1,11 +1,13 @@
 {% extends "layout.html" %}
 {% block item %}
-<div class="col-md-4 offset-md-4 login-form">
+<div class="col-md-6 offset-md-4 login-form">
     <form action="/handleUpload" method="post" enctype="multipart/form-data">
         {{ form.csrf_token }}
-        Choose the file: <input type="file" name="photo"/><BR>
-            <input type="submit" value="Upload"/>
+        <input type="file" name="photo"/>
+        <input type="submit" class = "btn btn-success" value="Upload"/>
     </form> 
+
+    <br>
 
     <form action="{{url_for('item')}}" method="post">
         {{ form.csrf_token }}
