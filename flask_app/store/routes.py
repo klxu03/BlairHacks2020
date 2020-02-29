@@ -14,7 +14,10 @@ items = {
             },
     "orange": {
                 "name": "orange"
-            }
+            },
+    "other":{
+                "name": "unknown"
+    }
 }
 
 
@@ -24,67 +27,35 @@ sess.init_app(app)
 
 
 @app.route('/item/<name>')
-def getInfo(name, file_name=None):
-	if file_name == None: #name based evaluation
-		item_info = product_info(name) # get nutritional info based on name
-		print(item_info)
-		extra_info = items[name] if name in items else items["other"]
-		if name in items:
-		    return render_template("item.html", info=items[name])
-		else:
-			return render_template("item.html", info={"name":"Unknown item"})
+def getInfo(name):
+    item_info = product_info(name) # get nutritional info based on name
+    extra_info = items[name] if name in items else items["other"]
+
+    return render_template("item.html", name=name, item_info=item_info, extra_info=extra_info)
 
 @app.route('/item', methods=['GET', 'POST'])
 def item():
     itemForm = ItemForm()
     if itemForm.validate_on_submit():
         itemText = request.form['item']
-        itemImage = request.form['picture']
-        if itemText != "": # there's something in the text form
-            print(itemText)
-            # go to the page of the given item
-            return redirect(url_for('getInfo', name=itemText))
-        else: # no text - is there a picture? (TODO)
-            print("No text!")
-            print(itemImage)
-            return redirect(url_for('getInfo', name='apple')) #temporarily just redirect to /items/apple
+        print(itemText)
+        return redirect(url_for('getInfo', name=itemText))
     else:
-    	return render_template("itemSearch.html", form=itemForm)
+        return render_template("itemSearch.html", form=itemForm)
 
 @app.route('/additem/<item>')
 def additem(item):
-    if session.get('items', False): #If there is no item here
-        print("1: " + session.get('items'))
-        if session.get('counts', False): #If there is not count inside
-            print("2: " + session.get('items'))
-            if item in session['counts']: #If there is already a count (maybe 2)
-                session['counts'][item] += 1
-                session['item'].append(item)
-            else:
-                session['counts'][item] = 1
-                session['item'].append(item)
-        else:
-            session['counts'] = {item:1}
-            session['item'].append(item)
-
+    if item not in session['cartItems']:
+        session['cartItems'].append(item)
+    if item in session['cartAmounts']:
+        session['cartAmounts'][item]+=1
     else:
-        session['items'] = [item]
-        session['counts'] = {item:1}
-        session['item'].append(item)
-    
-    print("3: " + session.get('items'))
-    print(session.get('counts'))
-    print(session.get('counts')[item])
-    # print("Apple: " + str(item))
-
-    numberOfItems = session['counts'][item]
-    print("Apple: " + str(item) + " counts " + str(numberOfItems))
-
-    return redirect(url_for("cart", name = item, count = session.get('counts')[item], items = session['item']))
+        session['cartAmounts'][item] = 1
+    return redirect(url_for("cart"))
 
 @app.route('/cart')
 def cart():
-    return render_template("cart.html", items = session.get('items', []))
+    return render_template("cart.html", items = session['cartItems'], count = session['cartAmounts'])
 
 @app.route('/shoppinglist')
 def shoppinglist():
@@ -115,9 +86,13 @@ def json_from_barcode_photo(file_name):
 
 @app.route('/')
 def home():
+    session['cartItems'] = []
+    session['cartAmounts'] = {}
     return render_template("index.html")
 
 @app.route('/logout')
 def logout():
+    session['cartItems'] = []
+    session['cartAmounts'] = {}
     session['items'] = []
     return redirect(url_for("item"))

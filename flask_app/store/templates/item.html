@@ -1,11 +1,12 @@
 {% extends "layout.html" %}
 {% block item %}
     <div class="card col-md-8 offset-md-2">
-    	<h5 class="card-title">Item: {{info["name"]}}</h5>
-  		<div class="card-body">
-		Fat: 100000g  		
-		</div>
+        <div class="card-body">
+    	    <h5 class="card-title">Item Name: {{name}}</h5>
+            MORE INFO HERE SUCH AS<br>  
+            Fat: 100000g  		
+        </div>
+        <br>
+        <a href="{{url_for('additem', item=name)}}"><button type="button" class="btn btn-primary">Add to Cart</button></a>
 	</div>
-    <br>
-    <button type="button" class="btn btn-primary" onclick="window.location.href='/../additem/{{info["name"]}}'">Add to Cart</button>
 {% endblock %}
