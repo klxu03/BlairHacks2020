@@ -82,6 +82,7 @@ def handleFileUpload():
 
 @app.route('/')
 def home():
+    session['login'] = True
     session['cartItems'] = []
     session['cartAmounts'] = {}
     return render_template("index.html")
