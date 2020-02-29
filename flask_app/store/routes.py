@@ -6,7 +6,7 @@ from store.form import ItemForm, ListForm
 from flask_session import Session
 from werkzeug.utils import secure_filename
 from .barcodereader import barcodereader
-from db import getData
+from .db import getData
 
 
 # Create a session object and initilize it
@@ -48,7 +48,7 @@ def additem(item):
 
 @app.route('/cart')
 def cart():
-    return render_template("cart.html", items = session['cartItems'], count = session['cartAmounts'], func = getData)
+    return render_template("cart.html", items = session['cartItems'], count = session['cartAmounts'], getData = getData)
 
 @app.route('/remItem/<item>')
 def remItem(item):
