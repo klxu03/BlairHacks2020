@@ -6,7 +6,7 @@ from store.form import ItemForm, ListForm
 from flask_session import Session
 from werkzeug.utils import secure_filename
 from .barcodereader import barcodereader
-from db import getData
+from .db import getData
 
 
 # Create a session object and initilize it
@@ -77,7 +77,7 @@ def handleFileUpload():
         photo = request.files['photo']
         photo_url = None # defined here for scoping purposes
         if photo.filename != '': # if the photo exists (?)
-            photo_url = os.path.join('./store/image-upload/', photo.filename)
+            photo_url = os.path.join('./', photo.filename)
             photo.save(photo_url)
     return redirect(url_for('item', json=barcodereader(photo_url)))
 
