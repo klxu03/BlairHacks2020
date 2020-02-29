@@ -104,9 +104,14 @@ def addlistitem():
 def handleFileUpload():
     if 'photo' in request.files:
         photo = request.files['photo']
-        if photo.filename != '':            
-            photo.save(os.path.join('./store/image-upload', photo.filename))
-    return redirect(url_for('item.html'))
+        photo_url = None # defined here for scoping purposes
+        if photo.filename != '': # if the photo exists (?)           
+            photo_url = os.path.join('./store/image-upload/', photo.filename)
+            photo.save(photo_url)
+    return redirect(url_for('item', json=json_from_barcode_photo(photo_url)))
+
+def json_from_barcode_photo(file_name):    
+    return product_info(barcodereader(file_name))
 
 @app.route('/')
 def home():
