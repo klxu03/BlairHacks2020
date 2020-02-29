@@ -20,4 +20,4 @@ def product_info(ingr=None, upc=None):
 	return response.json()
 
 #print(product_info(ingr="1 large apple"))
-#print(product_info(upc="0857183005120"))
+print(product_info(upc="0857183005120"))
