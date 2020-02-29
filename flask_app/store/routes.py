@@ -6,7 +6,7 @@ from store.form import ItemForm, ListForm
 from flask_session import Session
 from werkzeug.utils import secure_filename
 from .barcodereader import barcodereader
-from db import getData
+from .db import getData
 
 
 # Create a session object and initilize it
@@ -19,7 +19,7 @@ def getInfo(ingr, upc=None):
     if ingr is not "pic": # get nutritional info based on name (ingredient)
         item_json = product_info(ingr=ingr)
         name = ingr
-    else: 
+    else:
         item_json = product_info(upc=upc)
         name = item_json["hints"][0]["food"]["label"]
     nutr_info = item_json["hints"][0]["food"]["nutrients"]
