@@ -72,6 +72,13 @@ def additem(item):
 def cart():
     return render_template("cart.html", items = session['cartItems'], count = session['cartAmounts'])
 
+@app.route('/remItem/<item>')
+def remItem(item):
+    if item in session['cartItems']:
+        session['cartItems'].remove(item)
+        del session['cartAmounts'][item]
+    return redirect(url_for('cart'))
+
 @app.route('/shoppinglist')
 def shoppinglist():
     listForm = ListForm()
