@@ -7,18 +7,14 @@
             <input type="submit" value="Upload"/>
     </form> 
 
-    <form method = "POST" action = "{{ url_for('item') }}">
+    <form action="{{url_for('item')}}" method="post">
         {{ form.csrf_token }}
-        <fieldset class = "form-group">
-            <legend class = "border-bottom mb-4">Search for an item</legend>
-            <div class = "input-group">
-                {{ form.item(class = "form-control form-control-lg")}}
-                <span class = "input-group-btn">
-                    {{ form.submit(class = "btn btn-info go inline", id = 'submit')}}
-                </span>
-            </div>
-        </fieldset>
+        <div class="input-group" > 
+            {{ form.item(class="form-control form-contol-lg")}}
+            <span class="input-group-btn">
+                {{ form.submit(class="btn btn-info go inline", id='submit') }}
+            </span>
+        </div>
     </form>
-    
 </div>
 {% endblock %}
