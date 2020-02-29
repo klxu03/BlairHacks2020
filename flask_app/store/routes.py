@@ -7,19 +7,6 @@ from flask_session import Session
 from werkzeug.utils import secure_filename
 from .barcodereader import barcodereader
 
-items = {
-    "apple": {
-                "name": "apple",
-                "price": 1.99
-            },
-    "orange": {
-                "name": "orange"
-            },
-    "other":{
-                "name": "unknown"
-    }
-}
-
 
 # Create a session object and initilize it
 sess = Session()
@@ -35,7 +22,7 @@ def getInfo(ingr, upc=None):
         item_json = product_info(upc=upc)
         name = item_json["hints"][0]["food"]["label"]
     nutr_info = item_json["hints"][0]["food"]["nutrients"]
-    extra_info = items[name] if name in items else items["other"] # TODO will be replaced by database
+    #extra_info = items[name] if name in items else items["other"] # TODO will be replaced by database
     return render_template("item.html", name=name, nutr_info=nutr_info, extra_info=extra_info)
 
 @app.route('/item', methods=['GET', 'POST'])
