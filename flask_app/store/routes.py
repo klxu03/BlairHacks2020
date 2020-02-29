@@ -19,7 +19,7 @@ def getInfo(ingr, upc=None):
     if ingr is not "pic": # get nutritional info based on name (ingredient)
         item_json = product_info(ingr=ingr)
         name = ingr
-    else: 
+    else:
         item_json = product_info(upc=upc)
         name = item_json["hints"][0]["food"]["label"]
     nutr_info = item_json["hints"][0]["food"]["nutrients"]
@@ -48,7 +48,7 @@ def additem(item):
 
 @app.route('/cart')
 def cart():
-    return render_template("cart.html", items = session['cartItems'], count = session['cartAmounts'], func = getData)
+    return render_template("cart.html", items = session['cartItems'], count = session['cartAmounts'], getData = getData)
 
 @app.route('/remItem/<item>')
 def remItem(item):
