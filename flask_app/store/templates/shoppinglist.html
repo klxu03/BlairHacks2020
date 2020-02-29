@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block item %}
+<div class="container">
+   <table id="cart" class="table table-hover table-condensed">
+                <thead>
+                  <tr>
+                     <th style="width:50%">Product</th>
+                  </tr>
+               </thead>
+               <tbody>
+
+
+{%for item in items%}
+
+<tr id = "tablerow1">
+   <td data-th="Item">
+      <div class = "row">
+         <div class = "col-sm-2 hidden-xs"><img src="http://placehold.it/100x100" alt="..." class="img-responsive"/>
+            <div class="col-sm-12">
+               <h4 class="nomargin">{{item["name"]}}</h4>
+            </div>
+         </div>
+      </class>
+      <td class="actions" data-th="">
+         <input class="form-check-input position-static" type="checkbox">
+      </td>
+   </td>
+</tr>
+
+{%endfor%}
+
+
+<div class="col-md-4 offset-md-4 login-form">
+    <form method="POST" action="{{ url_for('shoppinglist') }}">
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Shopping List</legend>
+            <div class="input-group" >
+                {{ form.item(class="form-control form-contol-lg")}}
+                <span class="input-group-btn">
+                    {{ form.submit(class="btn btn-info go inline", id='submit') }}
+                </span>
+            </div>
+        </fieldset>
+    </form>
+</div>
+{% endblock %}

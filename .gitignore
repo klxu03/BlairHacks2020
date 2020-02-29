@@ -1,0 +1,4 @@
+
+*.pyc
+flask_app/flask_session/*
+*.env
