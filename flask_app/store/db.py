@@ -56,6 +56,20 @@ def getData(name, database):
         info = "Error"
     return info
 
+#returns a list of all data with price
+def getDataByPrice(price, database):
+    dynamoDB = boto3.resource('dynamodb', region_name='us-east-1')
+    table = dynamoDB.Table(database)
+    try:
+        info = []
+        all_items = table.scan(ProjectionExpression="#nm, price",ExpressionAttributeNames={"#nm":"name"}).get('Items')
+        for item in all_items:
+            if int(item.get('price')) == price:
+                info.append(item)
+        return info
+    except:
+        info = "Error"
+    return info
 
 # Takes in a csv named [filename].csv and makes a database called [name] with data
 # from the csv file
