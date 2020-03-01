@@ -6,7 +6,7 @@ from store.form import ItemForm, ListForm
 from flask_session import Session
 from werkzeug.utils import secure_filename
 from .barcodereader import barcodereader
-from db import getData
+from .db import getData
 
 
 # Create a session object and initilize it
@@ -16,12 +16,14 @@ sess.init_app(app)
 
 @app.route('/item/<ingr>')
 def getInfo(ingr, upc=None):
+    name = None
     if ingr is not "pic": # get nutritional info based on name (ingredient)
         item_json = product_info(ingr=ingr)
         name = ingr
-    else: 
+    else:
         item_json = product_info(upc=upc)
         name = item_json["hints"][0]["food"]["label"]
+    print(name)
     nutr_info = item_json["hints"][0]["food"]["nutrients"]
     #extra_info = items[name] if name in items else items["other"] # TODO will be replaced by database
     return render_template("item.html", name=name, nutr_info=nutr_info, extra_info={"TODO"})
@@ -48,7 +50,7 @@ def additem(item):
 
 @app.route('/cart')
 def cart():
-    return render_template("cart.html", items = session['cartItems'], count = session['cartAmounts'], func = getData)
+    return render_template("cart.html", items = session['cartItems'], count = session['cartAmounts'], getData = getData)
 
 @app.route('/remItem/<item>')
 def remItem(item):
@@ -77,9 +79,9 @@ def handleFileUpload():
         photo = request.files['photo']
         photo_url = None # defined here for scoping purposes
         if photo.filename != '': # if the photo exists (?)
-            photo_url = os.path.join('./store/image-upload/', photo.filename)
+            photo_url = os.path.join('./', photo.filename)
             photo.save(photo_url)
-    return redirect(url_for('item', json=barcodereader(photo_url)))
+    return redirect(url_for('getInfo', ingr="pic", json=barcodereader(photo_url)))
 
 @app.route('/')
 def home():
